@@ -1,0 +1,29 @@
+name: CI Build and Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@2
+        with:
+          java-version: '17'
+          distribution: 'openjdk'
+
+      - name: Set up Maven
+        uses: actions/setup-maven@v2
+
+      - name: Build and Test
+        run: mvn clean install -DskipTests
+
+      - name: Run Tests
+        run: mvn test
